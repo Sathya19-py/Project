@@ -1,0 +1,119 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+        <title>E-Fertilizer's | Seller Registration</title>
+        <link rel="shortcut icon" href="{% static 'Logo/my.png' %}" type="image/x-icon">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="{% static "CSS/index.css" %}">
+    </head>
+    <body>
+        <header>
+            <a class="logo" href="#"><img src='{% static "Logo/my.png" %}'> </a>
+            <div class="menu-toggle"></div>
+            <nav>
+                <ul>
+                    <li><a href="{% url "index" %}">Home</a></li>
+                    <li><a href="{% url "mpro" %}">Products</a></li>
+                    <li><a href="{% url "flogin" %}">Farmer's Corner</a></li>
+                    <li><a class="active" href="{% url "slogin" %}">Dealer's Corner</a></li>
+                    <li><a href="{% url "contact_us" %}">Contact Us</a></li>
+                    <li><a href="#">About Us</a></li>
+                </ul>
+            </nav>
+            <div class="clearfix"></div>
+        </header>
+        <div class="container-fluid freg1" style="background-image: url({% static 'Images/color.jpg' %})">
+            <div class="row">
+                <div class="col freg7">
+                    {% for mess in messages %}
+                        <h3>{{ mess }}</h3>
+                    {% endfor %}
+                </div>
+            </div>
+            <form action="{% url "sreg" %}" method="POST">
+                {% csrf_token %}
+                <div class="row">
+                    <div class="col-lg-3"></div>
+
+                    <div class="col-lg-5 freg2">
+                        <div class="row">
+                            <div class="col-lg-12 freg3">
+                                <b><i class="fa fa-user"></i> Seller Registration</b>
+                            </div>
+                            <div class="col-lg-2"></div>
+                            <div class="col-lg-8 freg4"></div>
+                            <div class="col-lg-2"></div>
+                            <div class="col-lg-12 freg5">
+                                <div class="row">
+                                    <div class="col-lg-2"></div>
+                                    <label class="col-lg-3">First Name</label>
+                                    <input class="col-lg-4" required name="first_name" type="text" placeholder="Enter First Name">
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-2"></div>
+                                    <label class="col-lg-3">Last Name</label>
+                                    <input class="col-lg-4" required name="last_name" type="text" placeholder="Enter Last Name">
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-1"></div>
+                                    <label class="col-lg-4">Mobile Number</label>
+                                    <input class="col-lg-4" type="tel" required pattern="^\d{10}$" name="mobile_number" placeholder="Enter Mobile Number">
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-2"></div>
+                                    <label class="col-lg-3">Email Id</label>
+                                    <input class="col-lg-4" type="email" required name="email_id" placeholder="Enter Email Id">
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-2"></div>
+                                    <label class="col-lg-3">Shop Name</label>
+                                    <input class="col-lg-4" type="text" required name="shop_name" placeholder="Enter Shop Name">
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-2"></div>
+                                    <label class="col-lg-3">Password</label>
+                                    <input class="col-lg-4" type="password" required name="password1" placeholder="Enter Password">
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-1"></div>
+                                    <label class="col-lg-4">Confirm-Password</label>
+                                    <input class="col-lg-4" type="password" required name="password2" placeholder="Enter Password Again">
+                                </div>
+                            </div>
+                            <div class="col-lg-12 freg6">
+                                <button type="submit">SUBMIT</button>
+                            </div>
+                            <div class="col-lg-12 freg6">
+                                <p><a href="{% url 'slogin' %}">Click Here To Login</a></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-1"></div>
+                </div>
+            </form>
+
+            <div class="row">
+                <div class="col freg7"></div>
+            </div>
+        </div>
+        <script src="https://use.fontawesome.com/069e5e99af.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        <script type="text/javascript">
+            $(document).ready(function(){
+                $('.menu-toggle').click(function(){
+                    $('.menu-toggle').toggleClass('active')
+                    $('nav').toggleClass('active')
+                })
+            })
+        </script>
+    </body>
+</html>

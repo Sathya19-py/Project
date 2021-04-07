@@ -1,0 +1,83 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+        <title>E-Fertilizer's | Orders</title>
+        <link rel="shortcut icon" href="{% static 'Logo/my.png' %}" type="image/x-icon">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="{% static "CSS/index.css" %}">
+    </head>
+    <body>
+        <header>
+            <a class="logo" href="#"><img src='{% static 'Logo/my.png' %}'> </a>
+            <div class="menu-toggle"></div>
+            <nav>
+                <ul>
+                    <li><a href="{% url "fhome" %}">Home</a></li>
+                    <li><a href="{% url "fpro" %}">Products</a></li>
+                    <li><a href="{% url "fcart" %}">Cart</a></li>
+                    <li><a class="active" href="{% url "forders" %}">Orders</a></li>
+                    <li><a href="{% url "fprofile" %}">Profile</a></li>
+                    <li><a href="{% url "flogout" %}">Logout</a></li>
+                </ul>
+            </nav>
+            <div class="clearfix"></div>
+        </header>
+        
+        <div class="container ford1">
+            <div class="row">
+                <div class="col-lg-12 ford2"></div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 ford3">
+                    <p><u><b>Your Orders</b></u></p>
+                </div>
+            </div>
+            <div class="row">
+                {% for item in ord %}
+                    <div class="col-lg-6">
+                       <div class="row">
+                            <div class="col-lg-2"></div>
+                            <div class="col-lg-4 ford4">
+                                <img src="{{ item.product.Product_Image.url }}">
+                            </div>
+                            <div class="col-lg-5 ford4">
+                                <p><b>Product Name : </b>{{ item.product.Product_Name }}</p>
+                                <p><b>Price : </b>&#8377 {{ item.product.Product_Price }}</p>
+                                <p><b>Quantity : </b>{{ item.Quantity }}</p>
+                                <p><b>Grand Total : </b>&#8377 {{ item.Sub_Total }}</p>
+                                <a href="../order_details?id={{item.Order_Id}}">
+                                    Order Details
+                                </a>
+                            </div>
+                       </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+
+
+
+
+        
+        
+        <script src="https://use.fontawesome.com/069e5e99af.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        <script type="text/javascript">
+            $(document).ready(function(){
+                $('.menu-toggle').click(function(){
+                    $('.menu-toggle').toggleClass('active')
+                    $('nav').toggleClass('active')
+                })
+            })
+        </script>
+    </body>
+</html>

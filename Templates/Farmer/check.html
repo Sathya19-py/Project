@@ -1,0 +1,145 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+        <title>E-Fertilizer's | Check Out</title>
+        <link rel="shortcut icon" href="{% static 'Logo/my.png' %}" type="image/x-icon">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="{% static "CSS/index.css" %}">
+    </head>
+    <body>
+        <header>
+            <a class="logo" href="#"><img src='{% static 'Logo/my.png' %}'> </a>
+            <div class="menu-toggle"></div>
+            <nav>
+                <ul>
+                    <li><a href="{% url "fhome" %}">Home</a></li>
+                    <li><a href="{% url "fpro" %}">Products</a></li>
+                    <li><a class="active" href="{% url "fcart" %}">Cart</a></li>
+                    <li><a href="{% url "forders" %}">Orders</a></li>
+                    <li><a href="{% url "fprofile" %}">Profile</a></li>
+                    <li><a href="{% url "flogout" %}">Logout</a></li>
+                </ul>
+            </nav>
+            <div class="clearfix"></div>
+        </header>
+        <form action="{% url 'place_order' %}" method="post">
+            {% csrf_token %}
+            <div class="container" style="max-width:1400px;">
+                <div class="row">
+                    <div class="col-lg-12" style="height:50px;">
+
+                    </div>
+                </div>
+                <div class="row">
+                    {% for item in car %}
+                        <div class="col-lg-3 check1">
+                            <div class="row">
+                                <div class="col-lg-5 check2">
+                                    <img src="{{ item.products.Product_Image.url }}">
+                                </div>
+                                <div class="col-lg-7 check3">
+                                    <div class="col-lg-12">
+                                        <p><b>Name : </b> {{ item.products.Product_Name }}</p>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <p><b>Price : </b>&#8377.{{ item.products.Product_Price }}</p>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <p><b>Sub Total : </b>&#8377.{{ item.Sub_Total }}</p>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <p><b>Quantity : </b> {{ item.Quantity }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="row check5">
+                    <div class="col-lg-12">
+                        <u><b>Select Delivery Address</b></u>
+                    </div>
+                    {% if d %}
+                        <div class="col-lg-12" style="text-align: center;">
+                            {% for x in messages %}
+                                <h5>{{ x }}</h5>
+                                <a href="{% url 'f_address' %}">click here to add</a>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {% for x in add %}
+                            <div class="col-lg-3 check4">
+                                <label>
+                                    <input checked type="radio" name="address" value="{{ x.id }}">
+                                    <p>{{ x.Locality_Area }},</p>
+                                    <p>{{ x.Landmark }},</p>
+                                    <p>{{ x.City }},</p>
+                                    <p>{{ x.State }},</p>
+                                    <p>{{ x.Pin_Code }}.</p>
+                                </label>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+                <div class="row check5">
+                    <div class="col-lg-12 check6">
+                        <u><b>Total Amount</b></u>
+                    </div>
+                    <div class="col-lg-12 check7">
+                        <p><b>Grand Total  : </b>&#8377.{{ Total }}</p>
+                    </div>
+                </div>
+                <div class="row check5">
+                    <div class="col-lg-12">
+                        <u><b>Select Payment Mode</b></u>
+                    </div>
+                    <div class="col-lg-12" style="padding:10px 30px;">
+                        <label><p><input type="radio" value="Cash On Delivery" checked name="Payment">  Cash On Delivery</p></label><br>
+                        <label><p><input type="radio" value="Net Banking" name="Payment">  Net Banking</p></label><br>
+                        <label><p><input type="radio" value="Credit Card" name="Payment">  Credit Card</p></label><br>
+                        <label><p><input type="radio" value="Debit Card" name="Payment">  Debit Card</p></label><br>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-9">
+
+                    </div>
+                    <div class="col-lg-3">
+                        {% if d %}
+                            <button disabled class="pbutton" type="submit">Place Order</button>
+                        {% else %}
+                            <button class="pbutton" type="submit">Place Order</button>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12" style="height:100px;">
+
+                    </div>
+                </div>
+            </div>
+        </form>
+
+
+
+        <script src="https://use.fontawesome.com/069e5e99af.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        <script type="text/javascript">
+            $(document).ready(function(){
+                $('.menu-toggle').click(function(){
+                    $('.menu-toggle').toggleClass('active')
+                    $('nav').toggleClass('active')
+                })
+            })
+        </script>
+    </body>
+</html>

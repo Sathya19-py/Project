@@ -1,0 +1,93 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+        <title>E-Fertilizer's | Profile</title>
+        <link rel="shortcut icon" href="{% static 'Logo/my.png' %}" type="image/x-icon">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="{% static "CSS/index.css" %}">
+    </head>
+    <body>
+        <header>
+            <a class="logo" href="#"><img src='{% static 'Logo/my.png' %}'> </a>
+            <div class="menu-toggle"></div>
+            <nav>
+                <ul>
+                    <li><a href="{% url "shome" %}">Home</a></li>
+                    <li><a href="{% url "s_add_pro" %}">Add Products</a></li>
+                    <li><a href="{% url "sproducts" %}">Products</a></li>
+                    <li><a href="{% url "sorders" %}">Orders</a></li>
+                    <li><a class="active" href="{% url "sprofile" %}">Profile</a></li>
+                    <li><a href="{% url "slogout" %}">Logout</a></li>
+                </ul>
+            </nav>
+            <div class="clearfix"></div>
+        </header>
+        <div class="container info1">
+            <div class="row">
+                <div class="col-lg-12 info2">
+                    {% for mess in messages %}
+                        <h4>{{ mess }}</h4>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-1"></div>
+                <div class="col-lg-4 info3">
+                    <div class="col-lg-12 info4">
+                        <u><b>Your Profile</b></u>
+                    </div>
+                    {% for x in sel %}
+                        <div class="row info5">
+                            <div class="col-lg-2"></div>
+                            <label class="col-lg-4">Full Name</label>
+                            <p class="col-lg-6" >{{ x.First_Name }} {{ x.Last_Name }}</p>
+
+                            <div class="col-lg-2"></div>
+                            <label class="col-lg-4">Mobile Number</label>
+                            <p class="col-lg-6" >{{ x.Mobile_Number}}</p>
+
+                            <div class="col-lg-2"></div>
+                            <label class="col-lg-4">Email Id</label>
+                            <p class="col-lg-6" >{{ x.Email_Id }}</p>
+
+                            <div class="col-lg-2"></div>
+                            <label class="col-lg-4">Shop Name</label>
+                            <p class="col-lg-6" >{{ x.Shop_Name }}</p>
+
+                            <div class="col-lg-2"></div>
+                            <label class="col-lg-4">Password</label>
+                            <p class="col-lg-6" >{{ x.Password }}</p>
+
+                            <div class="col-lg-12">
+                                <a href="../edit_profile?id={{ x.id }}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit Your Profile</a>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-12 info2">
+                    
+                </div>
+            </div>
+
+            
+
+
+            <div class="row">
+                <div class="col-lg-12 info2">
+                    
+                </div>
+            </div>
+            
+            
+        </div>
+    </body>
+</html>

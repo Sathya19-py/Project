@@ -1,0 +1,157 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+        <title>E-Fertilizer's | Products</title>
+        <link rel="shortcut icon" href="{% static 'Logo/my.png' %}" type="image/x-icon">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="{% static "CSS/index.css" %}">
+        <style>
+            .pro_data1{max-width:1400px;}
+            .pro_data2{text-align:center;}
+            .pro_data1 tr{border: 2px solid #CCCCC4}
+            .p_active{background-color: limegreen;color: white;outline: none;border-radius: 8px;font-weight:bolder;padding: 1px 20px;border: none;margin: 20px; }
+            .p_inactive{background-color: firebrick;color: white;outline: none;border-radius: 8px;font-weight:bolder;padding: 1px 20px;border: none;margin: 20px; }
+            .p_update{background-color: grey;color: white;outline: none;border-radius: 8px;font-weight:bolder;padding: 1px 20px;border: none;margin: 20px; }
+            .p_delete{background-color: orangered;color: white;outline: none;border-radius: 8px;font-weight:bolder;padding: 1px 20px;border: none;margin: 20px; }
+            .p_quantity{width: 45px;text-align: center;}
+            .add_del{font-weight: bolder;}
+            .pro_data3{margin:20px 0px;width: 120px;}
+            .pro_data4{width: 70px;height: 80px;}
+        </style>
+    </head>
+    <body>
+        <header>
+            <a class="logo" href="#"><img src='{% static 'Logo/my.png' %}'> </a>
+            <div class="menu-toggle"></div>
+            <nav>
+                <ul>
+                    <li><a href="{% url "shome" %}">Home</a></li>
+                    <li><a href="{% url "s_add_pro" %}">Add Products</a></li>
+                    <li><a class="active" href="{% url "sproducts" %}">Products</a></li>
+                    <li><a href="{% url "sorders" %}">Orders</a></li>
+                    <li><a href="{% url "sprofile" %}">Profile</a></li>
+                    <li><a href="{% url "slogout" %}">Logout</a></li>
+                </ul>
+            </nav>
+            <div class="clearfix"></div>
+        </header>
+        <div class="container pro_data1">
+            <div class="row">
+                <div class="col-lg-12 pro_data2">
+                    <h3>Products Details</h3>
+                </div>
+                <div class="table-responsive col-lg-12">
+                    <table class="table pro_data3" style="margin-top: 10px;text-align:center;">
+                        
+                        <tr style="background-color: #ECECEC">
+                            <th>Product Name</th>
+                            <th>Product Image</th>
+                            <th>Product Weight</th>
+                            <th>Total Quantity</th>
+                            <th>Product Price</th>
+
+                            <th>Update Quantity</th>
+
+                            <th>Status Action</th>
+                            <th>Update Action</th>
+                            <th>Delete</th>
+                        </tr>
+                        {% for item in pro %}
+                            <tr style="text-align: center;">
+                                <td><p class="pro_data3">{{ item.Product_Name }}</p></td>
+                                <td>
+                                    <img class="pro_data4" src="{{ item.Product_Image.url }}">
+                                </td>
+                                <td><p class="pro_data3">{{ item.Product_Weight }} {{ item.Product_Weight1 }}</p></td>
+                                <td><p class="pro_data3">{{ item.Product_Quantity }}</p></td>
+                                <td><p class="pro_data3">&#8377.{{ item.Product_Price }}</p></td>
+
+
+                                <td>
+                                    {% if item.Product_Quantity <= 1 %}
+                                        {% if item.Product_Status == 'Active' %}
+                                            <form action="{% url "add_quantity" %}" method="POST">
+                                                {% csrf_token %}
+                                                <p class="pro_data3">
+                                                    <button disabled class="add_del" name="op" value="-" type="submit">-</button>
+                                                    <input type="hidden" value="{{ item.id }}" name="id">
+                                                    <input  name="quantity" type="number" value="1" class="p_quantity" placeholder="Add/Sub Quantity">
+                                                    <button class="add_del" name="op" value="+" type="submit">+</button>
+                                                </p>
+                                            </form>
+                                        {% else %}
+                                            <p class="pro_data3">
+                                                <button disabled class="add_del" name="op" value="-" type="submit">-</button>
+                                                <input type="hidden" value="{{ item.id }}" name="id">
+                                                <input disabled  name="quantity" type="number" value="1" class="p_quantity" placeholder="Add/Sub Quantity">
+                                                <button disabled class="add_del" name="op" value="+" type="submit">+</button>
+                                            </p>
+                                        {% endif %}
+                                    {% else %}
+                                        {% if item.Product_Status == 'Active' %}
+                                            <form action="{% url "add_quantity" %}" method="POST">
+                                                {% csrf_token %}
+                                                <p class="pro_data3">
+                                                    <button class="add_del" name="op" value="-" type="submit">-</button>
+                                                    <input type="hidden" value="{{ item.id }}" name="id">
+                                                    <input  name="quantity" type="number" value="1" class="p_quantity" placeholder="Add/Sub Quantity">
+                                                    <button class="add_del" name="op" value="+" type="submit">+</button>
+                                                </p>
+                                            </form>
+                                        {% else %}
+                                            <p class="pro_data3">
+                                                <button disabled class="add_del" name="op" value="-" type="submit">-</button>
+                                                <input type="hidden" value="{{ item.id }}" name="id">
+                                                <input disabled  name="quantity" type="number" value="1" class="p_quantity" placeholder="Add/Sub Quantity">
+                                                <button disabled class="add_del" name="op" value="+" type="submit">+</button>
+                                            </p>
+                                        {% endif %}
+                                    {% endif %}
+                                </td>
+                                
+
+                            
+    
+                                <td>
+                                    <form action="{% url 'change_status' %}" method="POST">
+                                        {% csrf_token %}
+                                        {% if item.Product_Status == 'Active' %}
+                                            <input type="hidden" value="{{ item.id }}" name="id">
+                                            <input type="hidden" value="{{ item.Product_Status }}" name="status">
+                                            <button class="p_active" type="submit" >{{ item.Product_Status }}</button>
+                                        {% else %}
+                                            <input type="hidden" value="{{ item.id }}" name="id">
+                                            <input type="hidden" value="{{ item.Product_Status }}" name="status">
+                                            <button class="p_inactive" type="submit" >{{ item.Product_Status }}</button>
+                                        {% endif %}
+                                    </form>
+                                </td>
+                                <td>
+                                    <form action="{% url "s_update_product" %}" method="post">
+                                        {% csrf_token %}
+                                        <input type="hidden" value="{{ item.id }}" name="id">
+                                        <button class="p_update" type="submit"> Update</button>
+                                    </form>
+                                </td>
+                                <td>
+                                    <form action="{% url "s_delete_product" %}" method="post">
+                                        {% csrf_token %}
+                                        <input type="hidden" value="{{ item.id }}" name="id">
+                                        <button class="p_delete" style="width:150px;" type="submit" ><i class="fa fa-trash"></i> Delete</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        
+                    </table>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
